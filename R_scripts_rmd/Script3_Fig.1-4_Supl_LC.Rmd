@@ -580,7 +580,7 @@ set.seed(8363830)
 AA_Genus <- read.csv("~/GitHub/Lake_Cadagno_microbial_loop_Saini_et_al_2021/16s_Files_R_codes/SI_Table2.csv")
 
 #removing cells <1000 
-AA_Genus2<- AA_Genus[which(AA_Genus$AA_Arch_Bac>=1000), ]
+AA_Genus2<- AA_Genus[which(AA_Genus$AA_Arch_Bac>=100), ]
 
 
  # uahbs234ab_cyna_CPF2F<- AA_Genus[which(AA_Genus$depth_m=="15"), ]
@@ -596,7 +596,7 @@ AA_Genus2<- AA_Genus[which(AA_Genus$AA_Arch_Bac>=1000), ]
 
 
 #Fig 3(A)
-jascolor1<-    c("steelblue","#56B4E9", "lightblue1","burlywood1","burlywood3","chartreuse3", "palegreen",   "snow2", "snow3", "snow4", "dimgray", "thistle1", "thistle2", "plum1", "tan2", "tan3")  #Picking colors
+jascolor1<-    c("steelblue","#56B4E9", "lightblue1","burlywood1","burlywood3", "palevioletred2", "hotpink1", "hotpink3", "chartreuse3", "palegreen",   "snow2", "snow3", "snow4", "dimgray","tan3", "tan2", "tan", "thistle1", "thistle2", "plum1")  #Picking colors
 #"chartreuse3", "chartreuse4""plum3","plum4"
 
 
@@ -604,7 +604,7 @@ jascolor1<-    c("steelblue","#56B4E9", "lightblue1","burlywood1","burlywood3","
                             mapping = aes_string(x ="Sample",fill="Phylum",y="AA_Arch_Bac"))+
     geom_bar(stat="identity")+
     theme(legend.position="none")+
-    ylab("Absolute Abundance (>1000 Cells/mL)")+
+    ylab("Absolute Abundance (>100 Cells/mL)")+
     coord_flip()+                   
     theme_bw()+
     xlab("Depth (m)")+
@@ -619,7 +619,7 @@ jascolor1<-    c("steelblue","#56B4E9", "lightblue1","burlywood1","burlywood3","
     theme(legend.box.background = element_rect(color="white", size=2), panel.border = element_rect(colour = "black", fill=NA, size=2))+
       theme(axis.text = element_text(size = 12))+
      guides(fill=guide_legend(nrow = 8, title=" A. Phylum"))+
-     ggtitle("A. Absolute Abundance of Lake Cadagno Bacterial Communites (Phylum)" )+
+     ggtitle("B. Absolute Abundance of Lake Cadagno Bacterial Communites (Phylum)" )+
    theme(axis.text=element_text(size=14),
           axis.title=element_text(size=14,face="bold"), legend.text = element_text(size=12))+
         xlab("Depth (m)")+
@@ -643,7 +643,11 @@ jascolor1<-    c("steelblue","#56B4E9", "lightblue1","burlywood1","burlywood3","
                                            colour ="white"),  legend.direction = "vertical")+
   theme(legend.title=element_text(size=12, face="bold"), 
     legend.text=element_text(size=12), axis.ticks.y = element_blank())+    scale_y_continuous(labels = scales::scientific, breaks = scales::pretty_breaks(n = 6), limits = c(0, 9e+05))+
-         theme (legend.box.background = element_rect(colour = "black"))
+         theme (legend.box.background = element_rect(colour = "black"))+
+    theme(axis.title.y = element_blank(), axis.ticks.y = element_blank(), axis.text.y = element_blank())+
+   theme(legend.position = "none")
+ 
+
   
  
 
@@ -676,7 +680,7 @@ jascolor1<-    c("steelblue","#56B4E9", "lightblue1","burlywood1","burlywood3","
                    theme(axis.text = element_text(size = 12))+
                    theme(axis.title = element_text(size = 12),  legend.box.background = element_rect(color="white",                    size=01), panel.border = element_rect(colour = "black", fill=NA, size=2))+
                    guides(fill=guide_legend(nrow=14, title.position = "top"))+
-                   ggtitle("B. Absolute Abundance of Proteobacteria (Genus)" )+
+                   ggtitle("C. Absolute Abundance of Proteobacteria (Genus)" )+
                    theme(legend.position="right")+
                    theme(axis.text=element_text(size=14),
                    axis.title=element_text(size=14,face="bold"))+
@@ -731,7 +735,7 @@ guides(fill=guide_legend(nrow=14, title= "B. Genus"))+
                    theme(axis.text = element_text(size = 12))+
                    theme(axis.title = element_text(size = 12),  legend.box.background = element_rect(color="white",                    size=01), panel.border = element_rect(colour = "black", fill=NA, size=2))+
                    guides(fill=guide_legend(ncol=2, title.position = "top"))+
-                   ggtitle("C. Absolute Abundance of Bacteroidetes (Genus)" )+
+                   ggtitle("D. Absolute Abundance of Bacteroidetes (Genus)" )+
                    theme(legend.position="right")+
                    theme(axis.text=element_text(size=14),
                    axis.title=element_text(size=14,face="bold"))+
@@ -753,11 +757,14 @@ guides(fill=guide_legend(nrow=13, title="C. Genus" ))+
               scale_y_continuous(labels = scales::scientific)+
            theme (legend.box.background = element_rect(colour = "black"))+
            scale_y_continuous(labels = scales::scientific, breaks = scales::pretty_breaks(n = 6), limits = c(0, 9e+05))
-      
+
     
     
-  #fig.3  
-  figure3<-   (yv1a_CC / (ProtOTU2_P | ProtOTU2_B)) #15 x15.5
+  
+   
+    
+    
+    #15 x15.5
      
   
   
@@ -1383,10 +1390,10 @@ Fig.S4<- ggarrange(VLP_oxy, VLP_par, VLP_dep, VLP_cond, VLP_SP, NULL, nrow = 3, 
                           mapping = aes_string(x=  "Sample", y="OTU_RA", fill="Phylum"))+ theme_bw()+
      geom_bar(stat="identity")+
     theme(legend.position="right")+ 
-     scale_fill_manual(values = c("#EBB155","#E363CE","#DBE4A2",  "#80ACE3", "#D7A6C8", "#816FD2", "#72EA4F", "#6B9198", "#7C3EE0", "#959F5F", "#DCD6E1", "#DBE555", "#DB5D8E", "#7BE081", "#79DCE4", "#E09C86", "#C8E1CA", "#6FDBB4", "#CA8FD9", "#D542E5"))+
+     scale_fill_manual(values = c("steelblue","#56B4E9", "lightblue1","burlywood1","burlywood3", "palevioletred2", "hotpink1", "hotpink3", "chartreuse3", "palegreen",   "snow2", "snow3", "snow4", "dimgray","tan3", "tan2", "tan", "thistle1", "thistle2", "plum1"))+
     theme(legend.box.background = element_rect(color="white", size=2), panel.border = element_rect(colour = "black", fill=NA, size=2))+
       theme(axis.text = element_text(size = 12))+
-     guides(fill=guide_legend(ncol = 1, title="A. Phylum"))+
+     guides(fill=guide_legend(ncol = 1, title="A-B Phylum"))+
      ggtitle("A. Relative Abundance of Lake Cadagno Bacterial Communites (Phylum)" )+
    theme(axis.text=element_text(size=14),
           axis.title=element_text(size=14,face="bold"), legend.text = element_text(size=12))+
@@ -1417,13 +1424,19 @@ Fig.S4<- ggarrange(VLP_oxy, VLP_par, VLP_dep, VLP_cond, VLP_SP, NULL, nrow = 3, 
       annotate(geom="text", x=14, y=0.50, label="Mixolimnion",
               color="black", size=5.5) + 
       annotate(geom="text", x=4, y=0.50, label="Monimolimnion",
-              color="black", size=5.5)
+              color="black", size=5.5)+
+    theme(legend.position = c(0.63, 0.75), legend.direction = "vertical",
+                   legend.background = element_rect(size=0.3, 
+                                   colour ="transparent", fill = "transparent"), legend.text = element_text(color = "black"))+
+   guides(fill=guide_legend(nrow=20))
+    
+ #fig.3  (15x16)
+  figure3<-   (pieipe3_ABN | yv1a_CC   +  plot_layout(guides = "collect")) / (ProtOTU2_P | ProtOTU2_B)
  
  
  
  palette1 <- distinctColorPalette(33)
 
-  
     Relative_Genus<- AA_Genus2[which(AA_Genus2$AA_Arch_Bac>=5000), ]
 
     pieipe3_ABN_Genus <-        ggplot(data = Relative_Genus,
@@ -1435,7 +1448,7 @@ Fig.S4<- ggarrange(VLP_oxy, VLP_par, VLP_dep, VLP_cond, VLP_SP, NULL, nrow = 3, 
     theme(legend.box.background = element_rect(color="white", size=2), panel.border = element_rect(colour = "black", fill=NA, size=2))+
       theme(axis.text = element_text(size = 12))+
      guides(fill=guide_legend(ncol = 1, title="B. Phylum|Genus"))+
-     ggtitle("B. Absolute Abundance of Lake Cadagno Bacterial Communites (Genus)" )+
+     ggtitle("A. Absolute Abundance of Lake Cadagno Bacterial Communites (Genus)" )+
    theme(axis.text=element_text(size=14),
           axis.title=element_text(size=14,face="bold"), legend.text = element_text(size=12))+
         xlab("Depth (m)")+
@@ -1469,7 +1482,7 @@ Fig.S4<- ggarrange(VLP_oxy, VLP_par, VLP_dep, VLP_cond, VLP_SP, NULL, nrow = 3, 
            guides(fill=guide_legend(ncol = 1, title="B. Phylum|Genus"))
 
     #Fig.S5
-    fig.S5<- pieipe3_ABN | pieipe3_ABN_Genus
+    fig.S5<-  pieipe3_ABN_Genus
     fig.S5
         
         

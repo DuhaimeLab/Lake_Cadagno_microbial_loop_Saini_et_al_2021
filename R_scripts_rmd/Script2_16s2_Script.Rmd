@@ -197,7 +197,8 @@ set.seed(52775911)
 
   #GPSI  = transform_sample_counts(GPSI, function(x) x / sum(x))
   
-  #GPrSI<-  tax_glom(Bacteriaprofile, taxrank="Genus")
+
+
 
   bacteria_ab2 <- psmelt(GPSI)
   bacteria_ab3 <- bacteria_ab2[, -c(4,6, 7,9:19,26)]
@@ -263,8 +264,176 @@ table_bacteria_16s<- df4[which(df4$Kingdom=="Bacteria"), ]
 
 write.csv(table_bacteria_16s,"~/GitHub/Lake_Cadagno_microbial_loop_Saini_et_al_2021/16s_Files_R_codes/SI_Table2.csv")
 
+
+
+
+#relative abundance at phylum level
+ ########################################## 
+#Actinobacteria abundance in mixolimnion
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Actinobacteria"& table_bacteria_16s$depth_m=="3"), ]
+table_bacteria_act2<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Actinobacteria"& table_bacteria_16s$depth_m=="5"), ]
+table_bacteria_act3<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Actinobacteria"& table_bacteria_16s$depth_m=="7"), ]
+table_bacteria_act4<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Actinobacteria"& table_bacteria_16s$depth_m=="9"), ]
+table_bacteria_act5<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Actinobacteria"& table_bacteria_16s$depth_m=="11"), ]
+
+
+mean (sum(table_bacteria_act1$OTU_RA), sum(table_bacteria_act2$OTU_RA) , sum(table_bacteria_act3$OTU_RA) , sum(table_bacteria_act4$OTU_RA),
+sum(table_bacteria_act5$OTU_RA)) 
+
+
+mean (sum(table_bacteria_act1$AA_Arch_Bac_roundof), sum(table_bacteria_act2$AA_Arch_Bac_roundof) , sum(table_bacteria_act3$AA_Arch_Bac_roundof) , sum(table_bacteria_act4$AA_Arch_Bac_roundof),
+sum(table_bacteria_act5$AA_Arch_Bac_roundof)) 
+
+
+#Bacteriod abundance in mixolimnion
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacteroidetes"& table_bacteria_16s$depth_m=="3"), ]
+table_bacteria_act2<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacteroidetes"& table_bacteria_16s$depth_m=="5"), ]
+table_bacteria_act3<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacteroidetes"& table_bacteria_16s$depth_m=="7"), ]
+table_bacteria_act4<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacteroidetes"& table_bacteria_16s$depth_m=="9"), ]
+table_bacteria_act5<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacteroidetes"& table_bacteria_16s$depth_m=="11"), ]
+
+
+mean (sum(table_bacteria_act1$OTU_RA), sum(table_bacteria_act2$OTU_RA) , sum(table_bacteria_act3$OTU_RA) , sum(table_bacteria_act4$OTU_RA),
+sum(table_bacteria_act5$OTU_RA)) 
+
+
+mean (sum(table_bacteria_act1$AA_Arch_Bac_roundof), sum(table_bacteria_act2$AA_Arch_Bac_roundof) , sum(table_bacteria_act3$AA_Arch_Bac_roundof) , sum(table_bacteria_act4$AA_Arch_Bac_roundof),
+sum(table_bacteria_act5$AA_Arch_Bac_roundof))
+
+
+#Proteobacteria abundance in mixolimnion
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="3"), ]
+table_bacteria_act2<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="5"), ]
+table_bacteria_act3<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="7"), ]
+table_bacteria_act4<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="9"), ]
+table_bacteria_act5<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="11"), ]
+
+
+mean (sum(table_bacteria_act1$OTU_RA), sum(table_bacteria_act2$OTU_RA) , sum(table_bacteria_act3$OTU_RA) , sum(table_bacteria_act4$OTU_RA),
+sum(table_bacteria_act5$OTU_RA)) 
+
+
+mean (sum(table_bacteria_act1$AA_Arch_Bac_roundof), sum(table_bacteria_act2$AA_Arch_Bac_roundof) , sum(table_bacteria_act3$AA_Arch_Bac_roundof) , sum(table_bacteria_act4$AA_Arch_Bac_roundof),
+sum(table_bacteria_act5$AA_Arch_Bac_roundof))
+
+
+
+
+#Cyanobacteria abundance in mixolimnion
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"& table_bacteria_16s$depth_m=="3"), ]
+table_bacteria_act2<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"& table_bacteria_16s$depth_m=="5"), ]
+table_bacteria_act3<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"& table_bacteria_16s$depth_m=="7"), ]
+table_bacteria_act4<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"& table_bacteria_16s$depth_m=="9"), ]
+table_bacteria_act5<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"& table_bacteria_16s$depth_m=="11"), ]
+
+
+mean (sum(table_bacteria_act1$OTU_RA), sum(table_bacteria_act2$OTU_RA) , sum(table_bacteria_act3$OTU_RA) , sum(table_bacteria_act4$OTU_RA),
+sum(table_bacteria_act5$OTU_RA)) 
+
+
+mean (sum(table_bacteria_act1$AA_Arch_Bac_roundof), sum(table_bacteria_act2$AA_Arch_Bac_roundof) , sum(table_bacteria_act3$AA_Arch_Bac_roundof) , sum(table_bacteria_act4$AA_Arch_Bac_roundof),
+sum(table_bacteria_act5$AA_Arch_Bac_roundof))
+
+
+
+  
+  #Actinobacteria  in monimolimnion
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Actinobacteria"& table_bacteria_16s$depth_m=="17"), ]
+table_bacteria_act2<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Actinobacteria"& table_bacteria_16s$depth_m=="19"), ]
+
+
+
+mean (sum(table_bacteria_act1$OTU_RA), sum(table_bacteria_act2$OTU_RA))
+
+mean (sum(table_bacteria_act1$AA_Arch_Bac_roundof), sum(table_bacteria_act2$AA_Arch_Bac_roundof))
+
+
+ #Bacterio  in monimolimnion
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacteroidetes"& table_bacteria_16s$depth_m=="17"), ]
+table_bacteria_act2<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacteroidetes"& table_bacteria_16s$depth_m=="19"), ]
+
+
+
+mean (sum(table_bacteria_act1$OTU_RA), sum(table_bacteria_act2$OTU_RA))
+
+mean (sum(table_bacteria_act1$AA_Arch_Bac_roundof), sum(table_bacteria_act2$AA_Arch_Bac_roundof))
+  
+ #Proteobacteria  in monimolimnion
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="17"), ]
+table_bacteria_act2<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="19"), ]
+
+
+
+mean (sum(table_bacteria_act1$OTU_RA), sum(table_bacteria_act2$OTU_RA))
+
+mean (sum(table_bacteria_act1$AA_Arch_Bac_roundof), sum(table_bacteria_act2$AA_Arch_Bac_roundof))
+
+
+ #Cyanobacteria  in monimolimnion
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"& table_bacteria_16s$depth_m=="17"), ]
+table_bacteria_act2<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"& table_bacteria_16s$depth_m=="19"), ]
+
+
+
+ #Cyanobacteria  at transition zone 
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"& table_bacteria_16s$depth_m=="13"), ]
+
+
+sum(table_bacteria_act1$OTU_RA)
+
+sum(table_bacteria_act1$AA_Arch_Bac_roundof)
+
+ #Proteobacteria  at transition zone 
+table_bacteria_act1<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="13"), ]
+
+
+sum(table_bacteria_act1$OTU_RA)
+
+sum(table_bacteria_act1$AA_Arch_Bac_roundof)
+
+
+
+
 #Proteobacteria abundance
 table_bacteria_pro<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Proteobacteria"& table_bacteria_16s$depth_m=="15"), ]
+
+
+
+
+
+#Calculating relative abundance at phylum
+table_bacteria_16s_PP<- select(table_bacteria_16s, c('Phylum', 'Sample','depth_m', 'OTU_RA', 'AA_Arch_Bac_roundof')) 
+
+cols <- c('Phylum', 'Sample','depth_m')
+table_bacteria_16s %>% 
+   group_by(across('Phylum', 'Sample','depth_m')) %>% 
+   summarize(OTU_RA2=sum(OTU_RA), AA_Arch_Bac_roundof2=sum(AA_Arch_Bac_roundof))
+
+
+
+ table_bacteria_16s_PP %>% 
+  group_by(Sample, Phylum) %>% 
+   summarise(a_sum=sum(OTU_RA),
+            a_pp=(sum(AA_Arch_Bac_roundof)))
+ 
+ table_bacteria_16s_PP %>% 
+  group_by(Sample, Phylum) %>% 
+   summarise(a_sum=sum(OTU_RA),
+            a_pp=(sum(AA_Arch_Bac_roundof)))
+ 
+ 
+
+
+table_bacteria_act<- table_bacteria_16s_PP[which(table_bacteria_16s_PP$Phylum=="Actinobacteria"),]
+table_bacteria_act2<- table_bacteria_act[which(table_bacteria_act$depth_m<=11), ]
+
+
+
+
+
+
+table_bacteria_bct<- table_bacteria_16s_PP[which(table_bacteria_16s_PP$Phylum=="Bacteroidetes"),]
+table_bacteria_bct2<- table_bacteria_bct[which(table_bacteria_bct$depth_m<=11), ]
 
 
 table_bacteria_bac<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacteroidetes"& table_bacteria_16s$depth_m=="15"), ]
@@ -276,10 +445,15 @@ table_bacteria_bac<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Bacter
 table_cyano<- table_bacteria_16s[which(table_bacteria_16s$Phylum=="Cyanobacteria"), ]
 
 
-table_cyano<-   table_cyano %>% group_by(Sample) %>% mutate(cyano_per = ((Abundance/sum(Abundance) * 100)))
-table_cyano3<- table_cyano[which(table_cyano$Phylum=="Cyanobacteria"& table_cyano$depth_m=="13"), ]
+table_cyanof<-   table_cyano %>% group_by(Sample) %>% mutate(cyano_per = ((Abundance/sum(Abundance) * 100)))
 
-table_cyano2<- table_cyano[which(table_cyano$Phylum=="Cyanobacteria"& table_cyano$depth_m=="15"), ]
+
+table_cyano3<- table_cyanof[which(table_cyanof$Phylum=="Cyanobacteria"& table_cyanof$depth_m=="13"), ]
+
+table_cyano2<- table_cyanof[which(table_cyanof$Phylum=="Cyanobacteria"& table_cyanof$depth_m=="15"), ]
+
+table_cyano2c<- table_cyanof[which(table_cyanof$Phylum=="Cyanobacteria"& table_cyanof$depth_m=="7"), ]
+
 
 
 
