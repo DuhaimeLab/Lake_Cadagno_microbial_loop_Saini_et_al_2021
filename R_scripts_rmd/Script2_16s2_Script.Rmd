@@ -148,7 +148,8 @@ output: html_document
     ggtitle("Distribution of sample sequencing depth") + 
     xlab("Read counts") +
     theme(axis.title.y = element_blank())+ 
-    theme(axis.text=element_text(size=24), axis.title=element_text(size=24))
+    theme(axis.text=element_text(size=24), axis.title=element_text(size=24))+
+    scale_x_continuous(breaks=pretty_breaks())
   
   histo
   

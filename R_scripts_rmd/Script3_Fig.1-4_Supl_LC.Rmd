@@ -183,13 +183,16 @@ Temp_LC_cond123<- ggplot()+
                   annotate("rect", xmin=-Inf, xmax=Inf, ymin=13.5, ymax=15.5, alpha=0.5, fill="deeppink4")+
                   annotate("rect", xmin=-Inf, xmax=Inf, ymin=15.5, ymax=16.5, alpha=0.2, fill="deeppink4")+
                   annotate("rect", xmin=-Inf, xmax=Inf, ymin=16.5, ymax=Inf, alpha=0.2, fill="pink4")+
-                    theme(axis.text=element_text(size=24),axis.title=element_text(size=24,face="bold"))
+                    theme(axis.text=element_text(size=24),axis.title=element_text(size=24,face="bold"))+
+  annotate("text", x = 16, y = 2, label = "(- - -) 28 August 2017", colour = "black", size = 8.5)+   
+     annotate("text", x = 16, y = 3, label = "( — ) 29 August 2017", colour = "black", size = 8.5)
+  
 #Fig.1 (D)
 CTD2_29_Aug_17$Depth_m_CTD2_29
 chlpar<- ggplot(data=CTD1_29_Aug_17_R, aes(x=Depth_m_CTD1_29)) + 
          geom_path(data=CTD1_29_Aug_17_R, aes(y= as.numeric(CTD1_29_Aug_17_R$Depth_m_CTD1_29),               x=CTD1_29_Aug_17_R$Chl_A_CTD1_29*10), color="lightsalmon4", linetype="solid",  size=2)+
        geom_path(data=CTD1_28_Aug_17_R, aes(y=as.numeric(CTD1_28_Aug_17_R$Depth_m_CTD1_28),x=CTD1_28_Aug_17_R$Chl_A_ug_p_l_CTD1_28*10), color="lightsalmon4", linetype="dashed", size=2)+
-   geom_path(data=CTD2_29_Aug_17, aes(y=as.numeric(Depth_m_CTD2_29), x=CTD2_29_Aug_17$Phycocyanin_CTD2_29*10), color="lightsalmon3", linetype="solid", size=1.5)+
+   geom_path(data=CTD2_29_Aug_17, aes(y=as.numeric(Depth_m_CTD2_29), x=CTD2_29_Aug_17$Phycocyanin_CTD2_29*10), color="lightseagreen", linetype="solid", size=1.5)+
   # geom_point(data=CTD2_29_Aug_17, aes(y=as.numeric(Depth_m_CTD2_29), x=CTD2_29_Aug_17$Phycocyanin_CTD2_29*10), color="lightsalmon1", size=3.5)+
        geom_path(data=CTD2_29_Aug_17_avg_R, aes(y=as.numeric(CTD2_29_Aug_17_avg_R$Depth), x=CTD2_29_Aug_17_avg_R$PAR_CTD2_29),
        linetype="solid", size=2, color="black")+
@@ -211,7 +214,11 @@ chlpar<- ggplot(data=CTD1_29_Aug_17_R, aes(x=Depth_m_CTD1_29)) +
        theme(axis.ticks.y = element_blank())+ theme(axis.line.y.right = element_blank())+
        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
        theme(axis.title.x.top = element_text(color = "lightsalmon4"))+
-       theme(axis.title.x=element_text(size=24,face="bold")) #Legend annotation with Adobe Illustrator
+       theme(axis.title.x=element_text(size=24,face="bold"))+
+  annotate("text", x = 16, y = 2, label = "(- - -) 28 August 2017", colour = "black", size = 8.5)+   
+     annotate("text", x = 16, y = 3, label = "( — ) 29 August 2017", colour = "black", size = 8.5)
+
+    #Legend annotation with Adobe Illustrator
 
 #Fig.1 (E)
  H2S_Amm<- ggplot(data=Org_Inrg_R, aes(y=depth_m))+
@@ -237,7 +244,9 @@ chlpar<- ggplot(data=CTD1_29_Aug_17_R, aes(x=Depth_m_CTD1_29)) +
     annotate("rect", xmin=-Inf, xmax=Inf, ymin=15.5, ymax=16.5, alpha=0.2, fill="deeppink4")+
     annotate("rect", xmin=-Inf, xmax=Inf, ymin=16.5, ymax=Inf, alpha=0.2, fill="pink4")+
    annotate("segment", x = 0, xend = 0, y =5, yend = 9,
-  colour = "lightsalmon4", size=2, linetype = "dashed")
+  colour = "lightsalmon4", size=2, linetype = "dashed")+
+   annotate("text", x = 16, y = 2, label = "(- - -) 28 August 2017", colour = "black", size = 8.5)+   
+     annotate("text", x = 16, y = 3, label = "( — ) 29 August 2017", colour = "black", size = 8.5)
  
 #Fig.1 (F) 
  FvFm_R <- read.csv("~/GitHub/Lake_Cadagno_microbial_loop_Saini_et_al_2021/Fig.1-4_Suppl/FvFm_R2.csv")
@@ -318,7 +327,9 @@ chlpar<- ggplot(data=CTD1_29_Aug_17_R, aes(x=Depth_m_CTD1_29)) +
   geom_segment(aes(x = 13.5 , y = 0.4877256*10, xend = 14, yend = 0.4551373*10), linetype="solid", color = "lightsalmon4", size=2)+
     geom_segment(aes(x = 14 , y = 0.4551373*10, xend = 14.5, yend = 0.4055380*10), linetype="solid", color = "lightsalmon4", size=2)+
     geom_segment(aes(x = 14.5 , y = 0.4055380*10, xend = 15, yend = 0.3564647*10), linetype="solid", color = "lightsalmon4", size=2)+
-    expand_limits(x = 0, y = 0)
+    expand_limits(x = 0, y = 0)+
+     annotate("text", x = 16, y = 2, label = "(- - -) 28 August 2017", colour = "black", size = 8.5)+   
+     annotate("text", x = 16, y = 3, label = "( — ) 29 August 2017", colour = "black", size = 8.5)
   
 
    
@@ -365,7 +376,10 @@ chlpar<- ggplot(data=CTD1_29_Aug_17_R, aes(x=Depth_m_CTD1_29)) +
          scale_x_continuous(sec.axis = sec_axis(~.*2, name = "POC (ppm)"))+
        geom_point(data=profiles_POC, aes(y=depth_m, x=POC/2), color="lightsalmon4", size=3.5)+
     geom_path(data=profiles_POC[!is.na(profiles_POC$POC),], aes(y=depth_m, x=POC/2), color="lightsalmon4", size=2, linetype="solid")+
-              theme(axis.title.x.top = element_text(color = "lightsalmon4"))
+              theme(axis.title.x.top = element_text(color = "lightsalmon4"))+
+     annotate("text", x = 3, y = 2, label = "(- - -) 28 August 2017", colour = "black", size = 8.5)+   
+     annotate("text", x = 3, y = 3, label = "( — ) 29 August 2017", colour = "black", size = 8.5)
+  
    
    
    #Fig.1 (H) 
@@ -402,7 +416,10 @@ chlpar<- ggplot(data=CTD1_29_Aug_17_R, aes(x=Depth_m_CTD1_29)) +
       theme(axis.title.x.top = element_text(color = "lightsalmon4"))+
     theme(axis.title.x.bottom = element_text(color = "black"))+
       geom_path(data=profiles_POS, aes(y= depth_m, x = POS/0.65), colour="lightsalmon4", size=2)+
-      geom_point(data=profiles_POS, aes(y= depth_m, x = POS/0.65), colour="lightsalmon4", size=3.5)
+      geom_point(data=profiles_POS, aes(y= depth_m, x = POS/0.65), colour="lightsalmon4", size=3.5)+
+     annotate("text", x = 0.50, y = 2, label = "(- - -) 28 August 2017", colour = "black", size = 8.5)+   
+     annotate("text", x = 0.50, y = 3, label = "( — ) 29 August 2017", colour = "black", size = 8.5)
+  
  
  
 figure1<- (plot_spacer() | TurbvOxy123| Temp_LC_cond123| chlpar) / ( H2S_Amm | shsh2| DOC | PON )  +
@@ -416,7 +433,11 @@ figure1_gg<- ggarrange(NULL, TurbvOxy123, Temp_LC_cond123, chlpar, ncol=4, width
 
 figure1b_gg<- ggarrange(H2S_Amm, shsh2,  DOC, PON, ncol=4, widths = c(1.20,1,1,1))
 
-figure1_gg / figure1b_gg #22x24 pdf ###Figure 1
+figure1_gg / figure1b_gg + 
+  plot_annotation(tag_levels = 'A', , tag_prefix = '(',
+                         tag_suffix = ')') & 
+  theme(plot.tag = element_text(size = 26, face = "bold"))
+  #23x25 pdf ###Figure 1
 
 
 
