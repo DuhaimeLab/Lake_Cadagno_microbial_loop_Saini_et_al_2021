@@ -70,6 +70,7 @@ output: html_document
   library(readxl)
   library(RColorBrewer)
   library(randomcoloR)
+  library(microbiome)
 
   
   
@@ -192,21 +193,131 @@ set.seed(52775911)
         Family  != "mitochondria" &
         Class   != "Chloroplast")
   
+   #Archaea classification
+     Archaea <-  SamplesLC %>%
+    subset_taxa(
+      Kingdom == "Archaea")
+    
   
-  #####Bacterial communities analysis
-  GPSI = filter_taxa(Bacteriaprofile, function(x) sum(x > 3) > (0.20*length(x)), TRUE)
+###Merge bacteria and archaea phyloseq
+ps_merge <- merge_phyloseq(Bacteriaprofile, Archaea)
 
-  #GPSI  = transform_sample_counts(GPSI, function(x) x / sum(x))
+     
+#####Filter taxa communities analysis
+  GPSI = filter_taxa(ps_merge, function(x) sum(x > 3) > (0.20*length(x)), TRUE)
+  
+##Transform sample counts and calculate relative abundance
+
+ GPSI_5  = transform_sample_counts(GPSI, function(x) x / sum(x))
+
+  
+##Melt into dataframe r  
+
+bacteria_ab2 <- psmelt(GPSI_5)
+bacteria_ab3 <- bacteria_ab2[, -c(4,6, 7,9:19,26)]
+
+##Combine flow-cytometry cell counts and Relative abundance from 16S
+  
+bacteria_ab3$cells_ml  <-  bacteria_ab3$Abundance * bacteria_ab3$avg_cells_ml
+bacteria_ab3$cells_ml  <-  (round(bacteria_ab3$cells_ml, digits = 0)) ##Round off
+
+write.csv(bacteria_ab3,"D:/MS1_revisions/SI_Table1.csv")
+
+#Calculate alpha Diversity
+   
+   
+     richnessDT<- estimate_richness(ps_merge) #measures=c("Observed", "InvSimpson", "Shannon", "Chao1", "Simpson"))
+richnessDT<- setDT(richnessDT, keep.rownames = TRUE)[]
+colnames(richnessDT) <- paste(colnames(richnessDT), "16s_a", sep = "_")
+richnessDT2<- as.data.frame(richnessDT)
+setnames(richnessDT2,  "rn_16s_a", "Sample_ID") 
+
+richnessDT2$Depth_m<- c(15, 7, 11, 13, 15.5, 17, 19, 3, 5, 9)
+
+
+
+
+####Betadiversity plots
+ # Ordinate (Bray-curtis dissimilarity)
+  LC_pcoa <- ordinate(
+    physeq = ps_merge, 
+    method = "PCoA", 
+    distance = "bray"
+  )
+  
+  ##color codes 
+  #A6C9A6
+  #8DB78D
+  #CFE2CF
   
 
+betadiversity2 <- plot_ordination(ps_merge, LC_pcoa, color = "Sample_ID") + theme_bw()+
+      geom_point(size=8)+
+theme(legend.position = "right", legend.background = element_rect(size=0.3, colour ="white"),  legend.direction = "vertical")+ guides(fill = guide_legend(nrow= 3, ncol = 5, byrow = TRUE))+ scale_color_manual("Depth (m)", labels =c("LC-19m-E1"="19","LC-17m-E1"="17", "LC-15point5m-E1"="15.5", 
+"Cadagno15m-E2"="15", "LC-13m-E1"="13", "LC-11m-E1"="11","LC-9m-E1"="9",
+"Cadagno7m-E2"="7", "LC-5m-E1"="5", "LC-3m-E1"="3"), 
+limits=c("LC-3m-E1", "LC-5m-E1","Cadagno7m-E2",
+"LC-9m-E1", "LC-11m-E1", "LC-13m-E1","Cadagno15m-E2",
+"LC-15point5m-E1", "LC-17m-E1", "LC-19m-E1"), values=c("LC-19m-E1"="#d1baba","LC-17m-E1"="#d1baba", "LC-15point5m-E1"="#8c677d", "Cadagno15m-E2"="#b58ca5", 
+"LC-13m-E1"="#efcee2", "LC-11m-E1"="#52854C","LC-9m-E1"="ccc",
+"Cadagno7m-E2"="#C3D7A4", "LC-5m-E1"="#C3D7A4", "LC-3m-E1"="#C3D7A4"))+
+    theme(axis.text=element_text(size=24),axis.title=element_text(size=24,face="bold"))+  
+    labs(title = "Microbial Genotypic Beta Diversity")+
+     theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))+
+    theme(legend.position = c(0.45, 0.90), legend.background = element_rect(size=0.3, 
+                                             colour ="black"),  legend.direction = "horizontal")+
+         guides(fill = guide_legend(ncol=6))+
+          theme(panel.border = element_rect(colour = "black", fill=NA, size=2))+
+          theme(plot.title = element_text(size = 26, face = "bold"), plot.subtitle=element_text(size=24))+
+          theme(legend.title=element_text(size=24, face = "bold"), legend.text=element_text(size=24)) +             
+        theme(legend.background = element_blank(),
+           legend.box.background = element_rect(size = 1))+
+    theme(legend.position = "right")
+ 
+betadiversity2
+
+#Alpha diversity
+
+Rich_sha<- ggplot(data=richnessDT2, x="Depth_m",color="Sample_ID", y="Shannon_16s_a")+
+  annotate("rect", ymin=-Inf, ymax=Inf, xmin=-Inf, xmax=7.5, alpha=0.1, fill="green4")+
+  annotate("rect", ymin=-Inf, ymax=Inf, xmin=7.5, xmax=12.5, alpha=0.2, fill="green4")+
+         #annotate("rect", ymin=-Inf, ymax=Inf, xmin=12.5, xmax=13.5, alpha=0.3, fill="#52854C")+
+    annotate("rect", ymin=-Inf, ymax=Inf, xmin=12.5, xmax=13.5, alpha=0.4, fill="green4")+
+    annotate("rect", ymin=-Inf, ymax=Inf, xmin=13.5, xmax=15.5, alpha=0.5, fill="deeppink4")+
+    annotate("rect", ymin=-Inf, ymax=Inf, xmin=15.5, xmax=16.5, alpha=0.2, fill="deeppink4")+
+    annotate("rect", ymin=-Inf, ymax=Inf, xmin=16.5, xmax=Inf, alpha=0.2, fill="pink4")+
+   geom_point(data=richnessDT2, aes(y=as.numeric(richnessDT2$Shannon_16s_a), x=as.numeric(x=richnessDT2$Depth_m)), size=3.5)+
+     geom_line(data=richnessDT2, aes(y=as.numeric(richnessDT2$Shannon_16s_a), x=as.numeric(x=richnessDT2$Depth_m)), size=2)+
+   coord_flip()+ theme_bw()+
+   scale_x_reverse(limits = c(21,1))+
+     ylab("Shannon Diversity Measure")+
+    labs(title ="Microbial Genotypic Alpha Diversity")+
+   xlab("Depth (m)")+
+       
+    theme(panel.border = element_rect(colour = "black", fill=NA, size=2))+
+        theme(plot.title = element_text(size = 26, face = "bold"), plot.subtitle=element_text(size=24))+
+        theme(legend.title=element_text(size=24, face = "bold"), legend.text=element_text(size=24))+
+    theme(strip.background = element_blank(),
+   strip.text = element_blank())+
+    theme(axis.text=element_text(size=24),axis.title=element_text(size=24,face="bold"))+
+      theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))+
+   scale_x_reverse(limits = c(21,1), breaks=c(19, 17, 15.5, 15, 14, 13, 11,9, 7,5, 3, 1))
+
+  Rich_sha
 
 
-  bacteria_ab2 <- psmelt(GPSI)
-  bacteria_ab3 <- bacteria_ab2[, -c(4,6, 7,9:19,26)]
+
+
+#Calculating relative abundance at phylum
+RA_Phyl<- select(bacteria_ab3, c('Phylum', 'Sample','depth_m', 'Abundance', 'cells_ml')) 
+
+
 
   
-         # gpsfSI$Abundance_P<- gpsfSI$Abundance*100
-        #  gpsfSI$AA_Phylum  <-  gpsfSI$Abundance * gpsfSI$avg_cells_ml
+  # gpsfSI$Abundance_P<- gpsfSI$Abundance*100
+#  gpsfSI$AA_Phylum  <-  gpsfSI$Abundance * gpsfSI$avg_cells_ml
            
  
    
@@ -264,6 +375,11 @@ Phylum_wide_table[is.na(Phylum_wide_table)] <- 0
 table_bacteria_16s<- df4[which(df4$Kingdom=="Bacteria"), ]
 
 write.csv(table_bacteria_16s,"~/GitHub/Lake_Cadagno_microbial_loop_Saini_et_al_2021/16s_Files_R_codes/SI_Table2.csv")
+
+
+
+
+
 
 
 
@@ -489,7 +605,7 @@ richnessDT2$Depth_m<- c(15, 7, 11, 13, 15.5, 17, 19, 3, 5, 9)
 
  # Ordinate (Bray-curtis dissimilarity)
   LC_pcoa <- ordinate(
-    physeq = Bacteriaprofile, 
+    physeq = GPSI_5, 
     method = "PCoA", 
     distance = "bray"
   )
@@ -513,7 +629,7 @@ div_16s<- merge(richnessDT2, LC_pcoa1B, by.x= "Depth_m", by.y = "Depth_m_16s_b")
 div_16s <- div_16s[, -c(15:21)]
   
   
-betadiversity2 <- plot_ordination(SamplesLC, LC_pcoa, color = "Sample_ID") + theme_bw()+
+betadiversity2 <- plot_ordination(GPSI_5, LC_pcoa, color = "Sample_ID") + theme_bw()+
       geom_point(size=8)+
 theme(legend.position = "right", legend.background = element_rect(size=0.3, colour ="white"),  legend.direction = "vertical")+ guides(fill = guide_legend(nrow= 3, ncol = 5, byrow = TRUE))+ scale_color_manual("Depth (m)", labels =c("LC-19m-E1"="19","LC-17m-E1"="17", "LC-15point5m-E1"="15.5", 
 "Cadagno15m-E2"="15", "LC-13m-E1"="13", "LC-11m-E1"="11","LC-9m-E1"="9",
